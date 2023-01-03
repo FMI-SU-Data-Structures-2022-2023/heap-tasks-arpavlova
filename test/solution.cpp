@@ -37,6 +37,6 @@ TEST_CASE("Validate Trie") {
 
    CHECK(trie.search("nothing") == false);
    CHECK(trie.search("worl") == false);
-   CHECK(trie.search("asdasdasdasdas") == true);
+   CHECK(trie.search("asdasdasdasdas") == false);
 
 }
