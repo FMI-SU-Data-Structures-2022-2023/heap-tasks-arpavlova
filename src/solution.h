@@ -19,6 +19,7 @@ private:
             isEmpty = false;
         }
         bool isEnd() const { return isFinal; }
+        void copy(const NodeTrie& other);
         NodeTrie() 
         {  
             for (int i = 0; i < 26; ++i) { children[i] = nullptr; }
@@ -35,7 +36,7 @@ public:
 
     void insert(const char* ch);
     bool search(const char* ch);
-    Trie& operator=(const Trie& other) = delete;
+    Trie& operator=(const Trie& other);
     ~Trie();
 };
 
