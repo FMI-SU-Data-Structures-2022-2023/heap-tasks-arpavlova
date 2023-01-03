@@ -1,8 +1,8 @@
 #include "solution.h"
 
-void Trie::insert(const char* word) 
+void Trie::insert(const char* word)
 {
-    NodeTrie* node = root;
+    Trie* node = this;
     while (*word)
     {
         if (!node->contains(*word))
@@ -15,12 +15,12 @@ void Trie::insert(const char* word)
     node->isFinal = true;
 };
 
-bool Trie::search(const char* word) 
+bool Trie::search(const char* word) const
 {
-    NodeTrie* node = root;
+    const Trie* node = this;
     while (*word)
     {
-        if (!node->contains(*word))
+        if (!node || !node->contains(*word))
         {
             return false;
         }
@@ -29,53 +29,43 @@ bool Trie::search(const char* word)
     }
     return node->isEnd();
 };
-void Trie::cleanNodeTrie(NodeTrie* node)
-{
-    if (node != nullptr)
-    {
-        if (node->isEmpty)
-        {
-            // delete the leaf node
-            delete(node);
-            return;
-        }
 
-        for (NodeTrie* child : node->children)
-        {
-            cleanNodeTrie(child);
+void Trie::clean() 
+{
+    for (int i = 0; i < 26; i++) {
+        if (children[i] != nullptr) {
+            children[i]->clean();
+            delete children[i];
+            children[i] = nullptr;
         }
     }
-}
-void Trie::clean()
-{
-    cleanNodeTrie(root);
+
+    isFinal = false;
 }
 
-Trie::~Trie() 
+Trie::~Trie()
 {
     clean();
 }
 
-void Trie::NodeTrie::copy(const NodeTrie& other) 
+void Trie::Trie::copy(const Trie& other)
 {
     isFinal = other.isFinal;
-    isEmpty = other.isEmpty;
 
     for (int i = 0; i < 26; i++) {
         if (other.children[i] != nullptr) {
-            children[i] = new NodeTrie();
+            children[i] = new Trie();
             children[i]->copy(*other.children[i]);
         }
     }
 }
-
 
 Trie& Trie::operator=(const Trie& other)
 {
     if (this != &other)
     {
         clean();
-        root->copy(*(other.root));
+        copy(other);
     }
 
     return *this;
