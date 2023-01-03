@@ -55,3 +55,28 @@ Trie::~Trie()
 {
     clean();
 }
+
+void Trie::NodeTrie::copy(const NodeTrie& other) 
+{
+    isFinal = other.isFinal;
+    isEmpty = other.isEmpty;
+
+    for (int i = 0; i < 26; i++) {
+        if (other.children[i] != nullptr) {
+            children[i] = new NodeTrie();
+            children[i]->copy(*other.children[i]);
+        }
+    }
+}
+
+
+Trie& Trie::operator=(const Trie& other)
+{
+    if (this != &other)
+    {
+        clean();
+        root->copy(*(other.root));
+    }
+
+    return *this;
+}
