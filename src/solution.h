@@ -16,7 +16,7 @@
         void copy(const Trie& other);
         Trie() 
         {  
-            for (size_t i = 0; i < 26; ++i) { children[i] = nullptr; }
+            for (int i = 0; i < 26; ++i) { children[i] = nullptr; }
         }
 
         void insert(const char* ch);
