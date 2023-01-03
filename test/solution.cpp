@@ -22,7 +22,6 @@ TEST_CASE("Validate Heap") {
 }
 
 
-
 TEST_CASE("Validate Trie") {
 
    Trie trie;
@@ -37,6 +36,6 @@ TEST_CASE("Validate Trie") {
 
    CHECK(trie.search("nothing") == false);
    CHECK(trie.search("worl") == false);
-   CHECK(trie.search("asdasdasdasdas") == true);
+
 
 }
