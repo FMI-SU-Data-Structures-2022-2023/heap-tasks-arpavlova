@@ -1,44 +1,32 @@
 #ifndef WEEK7_TREE_H
-
-
-class Trie {
-private:
-    class NodeTrie
+    class Trie
     {
     public:
-        NodeTrie* children[26];
+        Trie* children[26];
         bool isFinal = false;
-        bool isEmpty = true;
         bool contains(const char ch) const
         {
             return children[ch - 'a'] != nullptr;
         }
         void addChar(const char ch)
         {
-            children[ch - 'a'] = new NodeTrie();
-            isEmpty = false;
+            children[ch - 'a'] = new Trie();
         }
         bool isEnd() const { return isFinal; }
-        void copy(const NodeTrie& other);
-        NodeTrie() 
+        void copy(const Trie& other);
+        Trie() 
         {  
-            for (int i = 0; i < 26; ++i) { children[i] = nullptr; }
+            for (size_t i = 0; i < 26; ++i) { children[i] = nullptr; }
         }
+
+        void insert(const char* ch);
+        bool search(const char* ch) const;
+        Trie& operator=(const Trie& other);
+        ~Trie();
+    private:
+        void clean();
     };
-private:
-    NodeTrie* root = new NodeTrie;
-private:
-    void clean();
-    void cleanNodeTrie(NodeTrie* node);
-public:
-    Trie() = default;
 
-
-    void insert(const char* ch);
-    bool search(const char* ch);
-    Trie& operator=(const Trie& other);
-    ~Trie();
-};
 
 #define WEEK7_TREE_H
 
